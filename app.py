@@ -121,7 +121,7 @@ if acceso():
                         col_left, col_right = st.columns([1, 1]) #Crear columnas tablas
                         with col_left: #Configurar columna izquierda
                             st.subheader("Vista Previa de Datos Mensuales") #Crear subencabezado datos
-                            st.dataframe(df_mes.head(10), use_container_width=True) #Mostrar dataframe resumido
+                            st.dataframe(df_mes, use_container_width=True) #Mostrar dataframe resumido
                         with col_right: #Configurar columna derecha
                             st.subheader("Descripcion Estadistica") #Crear subencabezado estadistica
                             st.dataframe(df_resumen_mes, use_container_width=True) #Mostrar tabla resumen completa
@@ -187,7 +187,7 @@ if acceso():
                 col_left, col_right = st.columns([1, 1]) #Crear columnas tablas
                 with col_left: #Configurar columna izquierda
                     st.subheader("Vista Previa de Datos Preparados") #Crear subencabezado datos
-                    st.dataframe(df_churn.head(10), use_container_width=True) #Mostrar dataframe resumido
+                    st.dataframe(df_churn, use_container_width=True) #Mostrar dataframe resumido
                 with col_right: #Configurar columna derecha
                     st.subheader("Descripcion Estadistica Base") #Crear subencabezado estadistica
                     st.dataframe(df_resumen, use_container_width=True) #Mostrar tabla resumen completa
