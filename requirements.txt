@@ -1,4 +1,6 @@
 streamlit
 pandas
 pyarrow
-pillows
+pillow
+xgboost
+scikit-learn
