@@ -1,0 +1,21 @@
+#1. Ignorar contraseñas y configuraciones sensibles
+config_*.json
+access_olts.txt
+.env
+.streamlit/
+
+#2. Ignorar datos crudos y pesados del Datalake (ETL)
+ETL/datalake/bronze/
+ETL/datalake/silver/
+ETL/datalake/gold/clean/
+
+#3. Ignorar archivos temporales de Python y Jupyter
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+#4. Ignorar entornos virtuales
+venv/
+env/
