@@ -1,0 +1,10 @@
+{
+  "inventario_olts": {
+    "ATAPANEO_OLT01": {
+      "ip": "atapaneo-cq.internetop.net",
+      "user": "user_ruben",
+      "pass": "RUBatap19*",
+      "port": "50011"
+    }
+  }
+}

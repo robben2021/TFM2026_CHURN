@@ -1,0 +1,64 @@
+{
+  "inventario_olts": {
+    "VIRREY_OLT01": {
+      "ip": "192.168.11.11",
+      "user": "user_ruben",
+      "pass": "RUBvirr19*",
+      "port": "22"
+    },
+    "BELO_OLT01": {
+      "ip": "192.168.12.11",
+      "user": "user_ruben",
+      "pass": "RUBbelo19*",
+      "port": "22"
+    },
+    "MADERO_OLT01": {
+      "ip": "192.168.13.11",
+      "user": "user_ruben",
+      "pass": "RUBmade19*",
+      "port": "22"
+    },
+    "PERIODISMO_OLT01": {
+      "ip": "192.168.14.11",
+      "user": "user_ruben",
+      "pass": "RUBperi19*",
+      "port": "22"
+    },
+    "PRADOS_OLT01": {
+      "ip": "192.168.15.11",
+      "user": "user_ruben",
+      "pass": "RUBprad19*",
+      "port": "22"
+    },
+    "PEDREGAL_OLT01": {
+      "ip": "192.168.16.11",
+      "user": "user_ruben",
+      "pass": "RUBpedr19*",
+      "port": "22"
+    },
+    "SANTIAGUITO_OLT01": {
+      "ip": "santiaguito-c.internetop.net",
+      "user": "user_ruben",
+      "pass": "RUBsant19*",
+      "port": "50011"
+    },
+    "REALITO_OLT01": {
+      "ip": "realito-c.internetop.net",
+      "user": "user_ruben",
+      "pass": "RUBreal19*",
+      "port": "50011"
+    },
+    "PUNHUATO_OLT01": {
+      "ip": "punhuato-c.internetop.net",
+      "user": "user_ruben",
+      "pass": "RUBpunh19*",
+      "port": "50011"
+    },
+    "FLORES-MAGON_OLT01": {
+      "ip": "floresmagon-c.internetop.net",
+      "user": "user_ruben",
+      "pass": "RUBfmag19*",
+      "port": "50011"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "database": {
+    "user": "bigdata",
+    "password": "#BIGd4t4Z",
+    "host": "192.168.253.241",
+    "name": "zabbix"
+  },
+  "etl_params": {
+    "anio": 2026,
+    "mes": 2,
+    "lista_olts": [
+      "VIRREY_OLT01",
+      "BELO_OLT01",
+      "MADERO_OLT01",
+      "PERIODISMO_OLT01",
+      "PRADOS_OLT01",
+      "PEDREGAL_OLT01",
+      "SANTIAGUITO_OLT01",
+      "REALITO_OLT01",
+      "PUNHUATO_OLT01",
+      "FLORES-MAGON_OLT01",
+      "VISTA-BELLA_OLT01",
+      "ATAPANEO_OLT01"
+    ]
+  }
+}
