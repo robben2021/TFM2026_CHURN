@@ -327,7 +327,7 @@ if acceso(): #Verificar credenciales y habilitar contenido principal
                     top_motivos['Texto'] = top_motivos['Cantidad'].astype(str) + " Reportes" #Concatenar numero y palabra clave
                     fig_motivos = px.bar(top_motivos, x='Cantidad', y='Motivo', orientation='h', color='Cantidad', color_continuous_scale='Viridis', text='Texto', labels={'Cantidad': 'Reportes Totales', 'Motivo': 'Falla Registrada'}) #Generar figura plotly
                     fig_motivos.update_traces(textposition='outside', hovertemplate='Motivo: %{y}<br>Reportes: %{x}<extra></extra>') #Forzar dibujo de texto por fuera y personalizar leyenda
-                    fig_motivos.update_layout(title="Frecuancia de Motivos de Fallas", xaxis_title="Cantidad de Reportes", yaxis_title="Motivo de Pedido", height=400, margin=dict(l=20, r=80, t=70, b=20), showlegend=False) #Ajustar titulos e incrementar margen superior
+                    fig_motivos.update_layout(title="Frecuencia de Motivos de Fallas", xaxis_title="Cantidad de Reportes", yaxis_title="Motivo de Pedido", height=400, margin=dict(l=20, r=80, t=70, b=20), showlegend=False) #Ajustar titulos e incrementar margen superior
                     fig_motivos.update_xaxes(range=[0, top_motivos['Cantidad'].max() * 1.35]) #Expandir limite derecho para mostrar texto completo
                     st.plotly_chart(fig_motivos, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
@@ -335,7 +335,7 @@ if acceso(): #Verificar credenciales y habilitar contenido principal
                     df_mes['ONT_MODEL_CLN'] = df_mes['ONT_MODEL'].astype(str).replace(['nan', 'NaN', 'NAN', 'None'], 'DESCONOCIDO').fillna('DESCONOCIDO') #Estandarizar nombres de equipos nulos
                     top_10_vol = df_mes['ONT_MODEL_CLN'].value_counts().head(10).index #Identificar equipos con mayor presencia fisica
                     df_top_ont = df_mes[df_mes['ONT_MODEL_CLN'].isin(top_10_vol)] #Filtrar datos unicamente al top diez
-                    fallas = df_top_ont['ONT_MODEL_CLN'].value_counts() #Sumarizar fallas por equipo
+                    fallas = df_top_ont['ONT_MODEL_CLN'].value_counts() #Sumar fallas por equipo
                     unicos = df_top_ont.groupby('ONT_MODEL_CLN')['CONTRATO'].nunique() #Agrupar y contar clientes unicos afectados
                     tasa = (fallas / unicos).reset_index() #Dividir para obtener tasa pura
                     tasa.columns = ['Modelo', 'Tasa'] #Renombrar columnas resultantes
@@ -357,7 +357,7 @@ if acceso(): #Verificar credenciales y habilitar contenido principal
                     fig_box = px.box(df_mes, x="RX_AVG", y="CLASE_TEXTO", color="CLASE_TEXTO", color_discrete_map=mapa_colores, category_orders={"CLASE_TEXTO": ["BAJA", "ACTIVO"]}, labels={'RX_AVG': 'Potencia (dBm)', 'CLASE_TEXTO': 'Estado Actual'}) #Armar boxplot horizontal asignando etiquetas legibles
                     fig_box.update_traces(hovertemplate='Estado: %{y}<br>Nivel Óptico: %{x:.2f} dBm<extra></extra>') #Limpiar tooltip eliminando nombres de variables base
                     fig_box.update_xaxes(hoverformat='.2f') #Aplicar formato de dos decimales al eje x                    
-                    fig_box.update_layout(title="Relacion Nivel Óptico y Deserción", xaxis_title="Nivel Óptico Recibido (dBm) - [Más cerca de 0 es mejor]", yaxis_title="Estado Operativo del Cliente", height=400, margin=dict(l=20, r=20, t=70, b=20), showlegend=False, template="plotly_white") #Empaquetar titulos descriptivos conservando plantilla clara e incrementando margen superior
+                    fig_box.update_layout(title="Relación Nivel Óptico y Deserción", xaxis_title="Nivel Óptico Recibido (dBm) - [Más cerca de 0 es mejor]", yaxis_title="Estado Operativo del Cliente", height=400, margin=dict(l=20, r=20, t=70, b=20), showlegend=False, template="plotly_white") #Empaquetar titulos descriptivos conservando plantilla clara e incrementando margen superior
                     fig_box.update_yaxes(categoryorder="array", categoryarray=["BAJA", "ACTIVO"]) #Reafirmar posicionamiento vertical de categorias                    
                     st.plotly_chart(fig_box, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
@@ -464,14 +464,14 @@ if acceso(): #Verificar credenciales y habilitar contenido principal
                 renderizar_grafico_estandarizado("EDA/graficos_eda/01_histograma_rx_avg.png", "Distribución de Potencia Óptica (dBm)") #Llamar funcion para proyectar primer grafico
                 st.markdown("---") #Anadir separador horizontal sutil
                 
-                renderizar_grafico_estandarizado("EDA/graficos_eda/02_barras_motivo_pedido.png", "Frecuancia de Motivos de Fallas") #Llamar funcion para proyectar segundo grafico
+                renderizar_grafico_estandarizado("EDA/graficos_eda/02_barras_motivo_pedido.png", "Frecuencia de Motivos de Fallas") #Llamar funcion para proyectar segundo grafico
                 st.markdown("---") #Anadir separador horizontal sutil
                 
                 renderizar_grafico_estandarizado("EDA/graficos_eda/01_ont_vs_tasa_reincidencia.png", "Tasa de Reincidencia por Modelo de ONT") #Llamar funcion para proyectar tercer grafico
                 st.markdown("---") #Anadir separador horizontal sutil
 
             with col2: #Mostrar segundos graficos
-                renderizar_grafico_estandarizado("EDA/graficos_eda/03_churn_vs_potencia.png", "Relacion Nivel Óptico y Deserción") #Llamar funcion para proyectar cuarto grafico
+                renderizar_grafico_estandarizado("EDA/graficos_eda/03_churn_vs_potencia.png", "Relación Nivel Óptico y Deserción") #Llamar funcion para proyectar cuarto grafico
                 st.markdown("---") #Anadir separador horizontal sutil
                 
                 renderizar_grafico_estandarizado("EDA/graficos_eda/03_donut_ont_model.png", "Distribución de Modelos ONTs") #Llamar funcion para proyectar quinto grafico
