@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap'); /*Importar tipografia desde google fonts*/
+
+/*Aplicar tipografia corporativa unicamente a textos fuera de streamlit*/
+html, body, p, span, div, h1, h2, h3, h4, h5, h6, a, button, li, [class*="css"] {
+    font-family: 'Inter', sans-serif; 
+}
+
+/*Proteger fuente nativa de iconos streamlit*/
+.material-symbols-rounded, [data-testid="stIconMaterial"], i, [class^="stIcon"] {
+    font-family: 'Material Symbols Rounded' !important;
+}
+
+.block-container { /*Seleccionar contenedor principal superior de streamlit*/
+    padding-top: 1rem !important; /*Reducir espacio en blanco superior de la pagina*/
+}
+
+/*Ajustar las pestañas centrales*/
+button[data-baseweb="tab"] { /*Seleccionar botones interactivos de las pestanas*/
+    padding: 0.5rem 1rem !important; /*Ajustar espaciado interno de cada boton*/
+}
+button[data-baseweb="tab"]:not(:last-child) { /*Seleccionar todas las pestanas excepto la que cierra a la derecha*/
+    border-right: 2px solid rgba(128, 128, 128, 0.3) !important; /*Dibujar linea divisoria vertical entre pestanas*/
+    border-radius: 0px !important; /*Remover curvatura de bordes para union limpia*/
+}
+button[data-baseweb="tab"] * { /*Seleccionar textos contenidos en las pestañas*/
+    font-size: 24px !important; /*Aumentar tamano de lectura*/
+    font-weight: 700 !important; /*Engrosar texto a negrita*/
+    transition: color 0.3s ease !important; /*Programar efecto de transicion fluida de colores*/
+}
+button[data-baseweb="tab"]:hover * { /*Detectar paso del cursor sobre la pestana*/
+    color: #10b981 !important; /*Iluminar texto en verde esmeralda*/
+}
+div[data-baseweb="tab-highlight"] { /*Seleccionar barra indicadora de la pestana visualizada*/
+    background-color: #0ea5e9 !important; /*Pintar barra activa de azul corporativo*/
+}
+button[data-baseweb="tab"][aria-selected="true"] * { /*Detectar estado de seleccion actual*/
+    color: #0ea5e9 !important; /*Pintar texto activo de azul corporativo*/
+}
+
+/*Estilo tarjetas corporativas*/
+[data-testid="stMetric"] { /*Seleccionar bloque contenedor del widget metric*/
+    background-color: rgba(14, 165, 233, 0.05) !important; /*Fondo con azul translucido*/
+    border-left: 6px solid #0ea5e9 !important; /*Dibujar barra de acento lateral izquierda*/
+    padding: 10px 15px !important; /*Separar limites de la caja de los datos*/
+    border-radius: 8px !important; /*Redondear equinas del bloque*/
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important; /*Proyectar sombra tenue inferior*/
+}
+[data-testid="stMetricLabel"] { /*Seleccionar texto descriptivo superior de la tarjeta*/
+    font-size: 15px !important; /*Fijar tamano discreto*/
+    font-weight: 600 !important; /*Acentuar grosor seminegrita*/
+    margin-bottom: 4px !important; /*Ajustar distancia con el valor numerico*/
+}
+[data-testid="stMetricValue"] { /*Seleccionar bloque del valor numerico principal*/
+    font-size: 26px !important; /*Aumentar proporcion para jerarquia visual*/
+    color: #0ea5e9 !important; /*Destacar valor numerico en azul*/
+    font-weight: 700 !important; /*Aplicar negrita total al numero*/
+    line-height: 1.2 !important; /*Comprimir interlineado vertical*/
+    margin-bottom: 4px !important; /*Separar del indicador de porcentaje inferior*/
+}
+[data-testid="stMetricDelta"] { /*Seleccionar texto complementario inferior*/
+    margin-top: 5px !important; /*Empujar leyenda delta hacia abajo*/
+}
+
+/*EstilO separadores horizontales*/
+hr { /*Seleccionar etiqueta html de regla horizontal*/
+    margin: 15px 0px !important; /*Crear zonas de oxigeno arriba y abajo del divisor*/
+    border: 0 !important; /*Anular borde solido nativo*/
+    border-top: 1px solid rgba(128, 128, 128, 0.3) !important; /*Dibujar trazo gris muy ligero*/
+}
+
+/*Estilo imagenes graficos*/
+[data-testid="stImage"] { /*Seleccionar contenedor de imagen nativo*/
+    border: 1px solid rgba(128, 128, 128, 0.2); /*Dibujar borde delimitador de celda*/
+    border-radius: 8px; /*Redondear esquinas sutilmente*/
+    background-color: rgba(128, 128, 128, 0.03); /*Aplicar fondo casi transparente*/
+    padding: 10px; /*Crear marco perimetral visual*/
+    margin-bottom: 10px; /*Separar bloque de los divisores inferiores*/
+    display: flex; /*Habilitar modelo de centrado*/
+    justify-content: center; /*Centrar horizontalmente el grafico*/
+    align-items: center; /*Centrar verticalmente el grafico*/
+}
+
+#pie_pagina {
+	text-align: center;
+	padding-top: 10px; 
+	padding-bottom: 10px; 
+	color: gray; 
+	font-size: 14px;
+}

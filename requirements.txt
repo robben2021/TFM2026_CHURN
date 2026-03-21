@@ -4,3 +4,7 @@ pyarrow
 pillow
 xgboost
 scikit-learn
+plotly
+scipy
+numpy
+streamlit-option-menu
