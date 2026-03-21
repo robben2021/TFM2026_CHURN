@@ -20,7 +20,7 @@ def adjuntar_css_externo(ruta_archivo): #Definir funcion para cargar estilos ext
     with open(ruta_archivo) as f: #Abrir archivo css de forma segura
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True) #Inyectar contenido leido al html de la pagina
 
-adjuntar_css_externo("estilos.css") #Llamar funcion para estilizar interfaz
+adjuntar_css_externo("estilos.css") #Llamar funcion para estilo interfaz
 
 @st.cache_data #Habilitar cache de memoria para acelerar lecturas posteriores
 def cargar_datos_historicos(ruta_parquet, ruta_csv): #Definir funcion para leer datos masivos
@@ -37,11 +37,13 @@ def acceso(): #Definir funcion para control de acceso mediante contrasena
             st.session_state["password_correct"] = False #Establecer bandera de acceso denegado
 
     if "password_correct" not in st.session_state: #Verificar si es la primera vez que el usuario ingresa
-        st.text_input("Por favor, ingresa la clave de acceso al Dashboard:", type="password", on_change=password_entered, key="password") #Solicitar clave de acceso inicial
+        st.info("Por favor, ingresar la clave de acceso") #Desplegar mensaje de contrasena
+        st.text_input("Contraseña:", type="password", on_change=password_entered, key="password") #Solicitar clave de acceso inicial
         return False #Retornar falso para detener la ejecucion
     elif not st.session_state["password_correct"]: #Verificar si el usuario fallo el intento
-        st.text_input("Por favor, ingresa la clave de acceso al Dashboard:", type="password", on_change=password_entered, key="password") #Solicitar clave de acceso nuevamente
-        st.error("Clave incorrecta. Inténtalo de nuevo.") #Mostrar mensaje de error por clave equivocada
+        st.info("Por favor, ingresar la clave de acceso") #Desplegar mensaje de contrasena
+        st.text_input("Contraseña:", type="password", on_change=password_entered, key="password") #Solicitar clave de acceso nuevamente
+        st.error("Clave incorrecta. Intentar de nuevo.") #Mostrar mensaje de error
         return False #Retornar falso para mantener bloqueada la aplicacion
     else: #Ejecutar bloque cuando la validacion es correcta
         return True #Retornar verdadero para liberar la aplicacion
@@ -93,12 +95,13 @@ def actualizar_desde_texto(): #Definir funcion para actualizar variable desde ca
         st.session_state.buscar_contrato = str(val).strip() #Sobrescribir contrato con la entrada manual del usuario
 
 
-if True: #Reemplazar temporalmente validacion para desarrollo sin login
+#Mostrar el titulo principal siempre para dar contexto incluso en la pantalla de bloqueo
+st.title("Predicción de la Deserción de Abonados 2026 CVR-MORELIA") 
+
+if acceso(): #Verificar credenciales y habilitar contenido principal
     RUTA_GOLD = "ETL/datalake/gold/clean/dataset_master_gold.parquet" #Definir constante con la ruta del conjunto maestro
     RUTA_MODELADO = "MODELADO/data/dataset_modelado_churn.parquet" #Definir constante con la ruta de datos de modelado
     RUTA_RESUMEN_CSV = "EDA/data/resumen_estadistico_completo.csv" #Definir constante con la ruta del resumen base
-
-    st.title("Predicción de la Deserción de Abonados 2026 CVR-MORELIA") #Mostrar el titulo principal de la aplicacion
 
     with st.sidebar: #Abrir contexto para dibujar en el panel lateral
         menu_principal = option_menu(
@@ -283,8 +286,8 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                 
                 col1, col_sep, col2 = st.columns([1, 0.02, 1]) #Fraccionar area inferior en tres columnas
                 
-                with col_sep: #Configurar columna central como linea divisoria
-                    st.markdown("<div style='background-color: rgba(128, 128, 128, 0.4); width: 2px; height: 1500px; margin: 0 auto;'></div>", unsafe_allow_html=True) #Dibujar linea vertical continua y solida
+                with col_sep: #Configurar columna central como linea divisoria responsiva
+                    st.markdown("<div class='divisor-responsivo' style='height: 1500px;'></div>", unsafe_allow_html=True) #Dibujar linea vertical que se acuesta en movil
                 
                 with col1: #Primeros graficos
                     fig_hist = px.histogram(df_mes, x="RX_AVG", nbins=40, color_discrete_sequence=['dodgerblue'], labels={'RX_AVG': 'Nivel Óptico', 'count': 'Cantidad de Clientes'}) #Instanciar histograma
@@ -303,7 +306,7 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                         xaxis_title="Nivel Óptico Recibido (dBm)", 
                         yaxis_title="Frecuencia (Cantidad de Clientes)", 
                         height=400, 
-                        margin=dict(l=20, r=20, t=40, b=20),
+                        margin=dict(l=20, r=20, t=70, b=20), #Incrementar margen superior para alojar menu interactivo plotly
                         showlegend=True, #Habilitar leyenda para explicar curva
                         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1), #Posicionar leyenda horizontal arriba
                         yaxis=dict(showgrid=True, gridcolor='rgba(128,128,128,0.2)'), #Garantizar grilla en Y corporativa
@@ -314,7 +317,7 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                             minor=dict(dtick=1, showgrid=True, gridcolor='rgba(128,128,128,0.1)') #Añadir cuadrícula intermedia sin texto cada 1 dBm
                         ) #Normalizar ejes y leyendas corporativas combinando etiquetas limpias y cuadrícula precisa
                     ) #Actualizar layout simetrico y profesional                    
-                    st.plotly_chart(fig_hist, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion
+                    st.plotly_chart(fig_hist, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
                     
                     df_mes['MOTIVO_PEDIDO_CLN'] = df_mes['MOTIVO_PEDIDO'].astype(str).str.replace('DA?ADO', 'DAÑADO', regex=False).str.replace('DAADO', 'DAÑADO', regex=False) #Limpiar texto de motivos
@@ -324,9 +327,9 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                     top_motivos['Texto'] = top_motivos['Cantidad'].astype(str) + " Reportes" #Concatenar numero y palabra clave
                     fig_motivos = px.bar(top_motivos, x='Cantidad', y='Motivo', orientation='h', color='Cantidad', color_continuous_scale='Viridis', text='Texto', labels={'Cantidad': 'Reportes Totales', 'Motivo': 'Falla Registrada'}) #Generar figura plotly
                     fig_motivos.update_traces(textposition='outside', hovertemplate='Motivo: %{y}<br>Reportes: %{x}<extra></extra>') #Forzar dibujo de texto por fuera y personalizar leyenda
-                    fig_motivos.update_layout(title="Frecuancia de Motivos de Fallas", xaxis_title="Cantidad de Reportes", yaxis_title="Motivo de Pedido", height=400, margin=dict(l=20, r=80, t=40, b=20), showlegend=False) #Ajustar titulos
+                    fig_motivos.update_layout(title="Frecuancia de Motivos de Fallas", xaxis_title="Cantidad de Reportes", yaxis_title="Motivo de Pedido", height=400, margin=dict(l=20, r=80, t=70, b=20), showlegend=False) #Ajustar titulos e incrementar margen superior
                     fig_motivos.update_xaxes(range=[0, top_motivos['Cantidad'].max() * 1.35]) #Expandir limite derecho para mostrar texto completo
-                    st.plotly_chart(fig_motivos, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion
+                    st.plotly_chart(fig_motivos, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
                     
                     df_mes['ONT_MODEL_CLN'] = df_mes['ONT_MODEL'].astype(str).replace(['nan', 'NaN', 'NAN', 'None'], 'DESCONOCIDO').fillna('DESCONOCIDO') #Estandarizar nombres de equipos nulos
@@ -340,9 +343,9 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                     tasa['Texto'] = tasa['Tasa'].round(2).astype(str) + " fallas/cliente" #Construir cadena textual para etiqueta
                     fig_reincidencia = px.bar(tasa, x='Tasa', y='Modelo', orientation='h', text='Texto', color_discrete_sequence=['dodgerblue']) #Dibujar barras horizontales limpiando configuraciones previas conflictivas
                     fig_reincidencia.update_traces(textposition='outside', hovertemplate='Modelo de ONT: %{y}<br>Tasa Promedio: %{x:.2f} fallas/cliente<extra></extra>') #Forzar dibujo de texto externo y sobrescribir tooltip completamente
-                    fig_reincidencia.update_layout(title="Tasa de Reincidencia por Modelo de ONT", xaxis_title="Tasa de Reincidencia por Modelo de ONT", yaxis_title="Modelo de ONT", height=400, margin=dict(l=20, r=20, t=40, b=20)) #Configurar layout visual
+                    fig_reincidencia.update_layout(title="Tasa de Reincidencia por Modelo de ONT", xaxis_title="Tasa de Reincidencia por Modelo de ONT", yaxis_title="Modelo de ONT", height=400, margin=dict(l=20, r=20, t=70, b=20)) #Configurar layout visual incrementando margen superior
                     fig_reincidencia.update_xaxes(range=[0, tasa['Tasa'].max() * 1.2]) #Expandir limite x para evitar cortes de texto
-                    st.plotly_chart(fig_reincidencia, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion
+                    st.plotly_chart(fig_reincidencia, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
                     
                 with col2: #Segundos graficos
@@ -354,17 +357,17 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                     fig_box = px.box(df_mes, x="RX_AVG", y="CLASE_TEXTO", color="CLASE_TEXTO", color_discrete_map=mapa_colores, category_orders={"CLASE_TEXTO": ["BAJA", "ACTIVO"]}, labels={'RX_AVG': 'Potencia (dBm)', 'CLASE_TEXTO': 'Estado Actual'}) #Armar boxplot horizontal asignando etiquetas legibles
                     fig_box.update_traces(hovertemplate='Estado: %{y}<br>Nivel Óptico: %{x:.2f} dBm<extra></extra>') #Limpiar tooltip eliminando nombres de variables base
                     fig_box.update_xaxes(hoverformat='.2f') #Aplicar formato de dos decimales al eje x                    
-                    fig_box.update_layout(title="Relacion Nivel Óptico y Deserción", xaxis_title="Nivel Óptico Recibido (dBm) - [Más cerca de 0 es mejor]", yaxis_title="Estado Operativo del Cliente", height=400, margin=dict(l=20, r=20, t=40, b=20), showlegend=False, template="plotly_white") #Empaquetar titulos descriptivos conservando plantilla clara
+                    fig_box.update_layout(title="Relacion Nivel Óptico y Deserción", xaxis_title="Nivel Óptico Recibido (dBm) - [Más cerca de 0 es mejor]", yaxis_title="Estado Operativo del Cliente", height=400, margin=dict(l=20, r=20, t=70, b=20), showlegend=False, template="plotly_white") #Empaquetar titulos descriptivos conservando plantilla clara e incrementando margen superior
                     fig_box.update_yaxes(categoryorder="array", categoryarray=["BAJA", "ACTIVO"]) #Reafirmar posicionamiento vertical de categorias                    
-                    st.plotly_chart(fig_box, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion
+                    st.plotly_chart(fig_box, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
                     
                     top_7_ont = df_mes['ONT_MODEL_CLN'].value_counts().head(7).reset_index() #Seleccionar top siete fabricantes
                     top_7_ont.columns = ['Modelo', 'Cantidad'] #Renombrar datos agregados
                     fig_donut = px.pie(top_7_ont, names='Modelo', values='Cantidad', hole=0.7, color_discrete_sequence=px.colors.qualitative.Pastel) #Crear tarta calibrada limpiando etiquetas automáticas conflictivas                    
                     fig_donut.update_traces(textposition='auto', textinfo='percent+label', hovertemplate='Modelo de ONT: %{label}<br>Equipos Instalados: %{value}<extra></extra>') #Permitir extraccion de textos en rebanadas pequenas y personalizar leyenda
-                    fig_donut.update_layout(title="Distribución de Modelos de ONT Instalados", height=400, margin=dict(l=20, r=20, t=40, b=20), showlegend=False) #Adherir titulo principal
-                    st.plotly_chart(fig_donut, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion
+                    fig_donut.update_layout(title="Distribución de Modelos de ONT Instalados", height=400, margin=dict(l=20, r=20, t=70, b=20), showlegend=False) #Adherir titulo principal incrementando margen superior
+                    st.plotly_chart(fig_donut, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
                     
                     if 'DIAS_ATENCION' in df_mes.columns: #Verificar datos temporales
@@ -373,11 +376,11 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
                         tiempo_zona = tiempo_zona.sort_values(by='DIAS_ATENCION', ascending=True) #Preparar lista para trazado ascendente plotly                        
                         fig_zonas = px.bar(tiempo_zona, x='DIAS_ATENCION', y='ZONA', orientation='h', color_discrete_sequence=['coral'], text='DIAS_ATENCION', labels={'DIAS_ATENCION': 'Días de Retraso', 'ZONA': 'Zona'}) #Delinear grafico de impacto inyectando texto nativo
                         fig_zonas.update_traces(texttemplate='%{x:.2f} Días de Retraso', textposition='outside', hovertemplate='Zona: %{y}<br>Días de Retraso: %{x:.2f}<extra></extra>') #Forzar formato de texto y decimales en etiquetas y cajas emergentes
-                        fig_zonas.update_layout(title="Zonas con Mayor Tiempo Promedio de Atención", xaxis_title="Tiempo Promedio de Atención (Días)", yaxis_title="Zona", height=400, margin=dict(l=20, r=20, t=40, b=20)) #Registrar descripciones
+                        fig_zonas.update_layout(title="Zonas con Mayor Tiempo Promedio de Atención", xaxis_title="Tiempo Promedio de Atención (Días)", yaxis_title="Zona", height=400, margin=dict(l=20, r=20, t=70, b=20)) #Registrar descripciones incrementando margen superior
                         fig_zonas.update_xaxes(range=[0, tiempo_zona['DIAS_ATENCION'].max() * 1.3]) #Expandir limite derecho para mostrar texto completo
                     else: #Fallo controlado
                         fig_zonas = px.bar(title="Datos de Días de Atención No Disponibles") #Crear ventana                  
-                    st.plotly_chart(fig_zonas, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion
+                    st.plotly_chart(fig_zonas, use_container_width=True, config={'locale': 'es'}) #Proyectar visualizacion preservando menu
                     st.markdown("---") #Anadir separador horizontal sutil
 
         else: #Opcion si la busqueda de archivos esta vacia
@@ -454,8 +457,8 @@ if True: #Reemplazar temporalmente validacion para desarrollo sin login
             
             col1, col_sep, col2 = st.columns([1, 0.02, 1]) #Distribuir area inferior en tres columnas reduciendo grosor central
             
-            with col_sep: #Configurar columna central como linea divisoria
-                st.markdown("<div style='background-color: rgba(128, 128, 128, 0.4); width: 2px; height: 1600px; margin: 0 auto;'></div>", unsafe_allow_html=True) #Dibujar linea vertical continua adaptada a dimensiones uniformes
+            with col_sep: #Configurar columna central como linea divisoria responsiva
+                st.markdown("<div class='divisor-responsivo' style='height: 1600px;'></div>", unsafe_allow_html=True) #Dibujar linea vertical que se acuesta en movil
             
             with col1: #Mostrar primeros graficos
                 renderizar_grafico_estandarizado("EDA/graficos_eda/01_histograma_rx_avg.png", "Distribución de Potencia Óptica (dBm)") #Llamar funcion para proyectar primer grafico

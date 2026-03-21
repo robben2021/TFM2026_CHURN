@@ -80,6 +80,19 @@ hr { /*Seleccionar etiqueta html de regla horizontal*/
     align-items: center; /*Centrar verticalmente el grafico*/
 }
 
+.divisor-responsivo { 
+	background-color: rgba(128, 128, 128, 0.4); 
+	width: 2px; 
+	margin: 0 auto; 
+}
+@media (max-width: 768px) { 
+	.divisor-responsivo { 
+		width: 100% !important; 
+		height: 2px !important; 
+		margin: 30px 0 !important; 
+		} 
+}
+
 #pie_pagina {
 	text-align: center;
 	padding-top: 10px; 
