@@ -195,7 +195,7 @@ if acceso(): #Verificar credenciales y habilitar contenido principal
                     ruta_shap = f"MODELADO/graficos_modelado_{mes_amigable}/01_shap_summary_{mes_amigable}.png" #Generar ruta dinamica para buscar el grafico del mes
                     if os.path.exists(ruta_shap): #Verificar disponibilidad de la imagen generada
                         st.markdown("<br>", unsafe_allow_html=True) #Anadir separador superior estandar
-                        st.image(ruta_shap, use_container_width=True) #Proyectar imagen shap
+                        st.image(ruta_shap, use_container_width=True) #Proyectar imagen shap                        
                         st.markdown("---") #Anadir separador inferior sutil
                     else: #Actuar en caso de falta de imagen local
                         st.warning("El gráfico SHAP para este mes aún no ha sido generado.") #Emitir advertencia visual de ausencia

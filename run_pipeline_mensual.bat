@@ -10,7 +10,8 @@ jupyter nbconvert --to notebook --execute --inplace ETL/B_SILVER_AGREGAR_ONT-MOD
 jupyter nbconvert --to notebook --execute --inplace ETL/C_GOLD_LIMPIEZA_VALORES-DUPLICADOS.ipynb
 
 :: 2. Correr EDA
-jupyter nbconvert --to notebook --execute --inplace EDA/RESUMEN_ESTADISTICO.ipynb
+::jupyter nbconvert --to notebook --execute --inplace EDA/RESUMEN_ESTADISTICO.ipynb
+jupyter nbconvert --to notebook --execute --ExecutePreprocessor.kernel_name=python3 --inplace EDA/RESUMEN_ESTADISTICO.ipynb
 
 :: 3. Correr Inferencia Mensual del Modelo
 jupyter nbconvert --to notebook --execute --inplace MODELADO/MODELADO.ipynb
